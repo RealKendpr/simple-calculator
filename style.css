@@ -11,7 +11,7 @@
   display: grid;
   place-items: center;
 }
-.input-wrapper input {
+.input-wrapper div {
   background: #c5c2c2;
   border: 0;
   outline: 0;
@@ -23,7 +23,7 @@
   font-size: 1.5rem;
 }
 #second-input {
-font-size: 2.5rem;
+  font-size: 2.5rem;
 }
 
 .calculator {
@@ -34,7 +34,6 @@ font-size: 2.5rem;
   background: #eee;
   width: 300px;
   min-width: 300px;
-
 }
 .numpad {
   height: 375px;
