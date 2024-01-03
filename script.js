@@ -1,5 +1,4 @@
 // calculator class functions
-
 class Calculator {
   constructor(firstInputTextElement, secondInputTextElement) {
     this.firstInputTextElement = firstInputTextElement;
@@ -20,10 +19,9 @@ class Calculator {
   appendNumber(number) {
     if (number === "." && this.firstInput.includes(".")) return;
     this.firstInput = this.firstInput.toString() + number.toString();
-    // this.firstInput = number;
   }
 
-  operation(operator) {
+  chooseOperator(operator) {
     if (this.firstInput === "") return;
     if (this.secondInput !== "") {
       this.compute();
@@ -48,7 +46,7 @@ class Calculator {
       case "*":
         evaluation = second * first;
         break;
-      case "/":
+      case "÷":
         evaluation = second / first;
         break;
       default:
@@ -59,9 +57,36 @@ class Calculator {
     this.secondInput = "";
   }
 
+  getDisplayNumber(number) {
+    const stringNumber = number.toString();
+    const integerDigits = parseFloat(stringNumber.split(".")[0]);
+    const decimalDigits = stringNumber.split(".")[1];
+    let integerDisplay;
+    if (isNaN(integerDigits)) {
+      integerDisplay = "";
+    } else {
+      integerDisplay = integerDigits.toLocaleString("en", {
+        maximumFractionDigits: 0,
+      });
+    }
+    if (decimalDigits != null) {
+      return `${integerDisplay}.${decimalDigits}`;
+    } else {
+      return integerDisplay;
+    }
+  }
+
   updateInputs() {
-    this.firstInputTextElement.innerText = this.firstInput;
-    this.secondInputTextElement.innerText = this.secondInput;
+    this.firstInputTextElement.innerText = this.getDisplayNumber(
+      this.firstInput
+    );
+    if (this.operator != null) {
+      this.secondInputTextElement.innerText = `${this.getDisplayNumber(
+        this.secondInput
+      )} ${this.operator}`;
+    } else {
+      this.secondInputTextElement.innerText = "";
+    }
   }
 }
 
@@ -99,8 +124,8 @@ numberBtns.forEach((button) => {
 
 operatorBtns.forEach((button) => {
   button.addEventListener("click", () => {
+    calculator.chooseOperator(button.innerText);
     calculator.updateInputs();
-    calculator.operation(button.innerText);
   });
 });
 
